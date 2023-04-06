@@ -6,11 +6,45 @@
         <script src="project3javascript.js"></script>
     </head>
     
-    <body>
-    <div id="startScreen", class="notLevels">
-        <h1>AVALANCHE</h1>
-        <h2>instructions go here</h2>
-        <h3>press X to start</h3>
-    </div>
+    <body onload="onOpen()">
+    <header><h1>AVALANCHE</h1></header>
+    <div id="content">
+        <div id="startScreen">
+            <h2>instructions go here</h2>
+            <button onClick="startLevelOne()">press to start</button>
+        </div>
+        <div id="levelOne">
+            <h2>level 1</h2>
+            <h2>score bar goes here</h2>
+        </div>
+        <div id="startTwo">
+            <h2>congratulations! you have reached level 2</h2>
+            <button onClick="startLevelTwo()">press to start</button>
+        </div>
+        <div id="levelTwo">
+            <h2>level 2</h2>
+            <h2>score bar goes here</h2>
+        </div>
+        <div id="loseTwo",>
+            <h2>fail</h2>
+            <button onClick="startLevelTwo()">press to try again</button>
+        </div>
+        <div id="startThree">
+            <h2>congratulations! you have reached level 2</h2>
+            <button onClick="startLevelTwo()">press to start</button>
+        </div>
+        <div id="levelThree">
+            <h2>level 3</h2>
+            <h2>score bar goes here</h2>
+        </div>
+        <div id="loseThree">
+            <h2>fail</h2>
+            <button onClick="startLevelThree()">press to try again</button>
+        </div>
+        <div id="winScreen">
+            <h2>congratulations! you have completed Avalanche</h2>
+            <button onClick="onOpen()">return to home screen</button>
+        </div>
+    <canvas id="gameCanvas"></canvas>
     </body>
 </html>
