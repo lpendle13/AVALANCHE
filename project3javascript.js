@@ -1,5 +1,3 @@
-var gameCanvas = document.getElementById("gameCanvas");
-
 function onOpen () {
     document.getElementById("levelOne").style.display="none";
     document.getElementById("startTwo").style.display="none";
@@ -9,24 +7,30 @@ function onOpen () {
     document.getElementById("levelThree").style.display="none";
     document.getElementById("loseThree").style.display="none";
     document.getElementById("winScreen").style.display="none";
-    document.getElementById("gameCanvas").style.display="none";
   }
-  
-function startLevelOne() {
-    document.getElementById("gameCanvas").style.display="block";
+
+  var gameCanvas = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+      this.context = this.canvas.getContext("2d");
+      document.body.insertAdjacentElement("afterend", canvasArea);
+      document.getElementById("canvasArea").style.display="block";
+    }
+  }
+
+  function startGame() {
+    gameCanvas.start();
     document.getElementById("startScreen").style.display="none";
     document.getElementById("levelOne").style.display="block";
   }
 
 function startLevelTwo() {
-    document.getElementById("gameCanvas").style.display="block";
     document.getElementById("startScreen").style.display="none";
     document.getElementById("startTwo").style.display="none";
     document.getElementById("levelTwo").style.display="block";
   }
 
 function startLevelThree() {
-    document.getElementById("gameCanvas").style.display="block";
     document.getElementById("startScreen").style.display="none";
     document.getElementById("startThree").style.display="none";
     document.getElementById("levelThree").style.display="block";  
@@ -45,11 +49,28 @@ function startLevelThree() {
     //else, display lose screen
   }
 
-gameCanvas.addEventListener('37', (e) => {
-    //tilt left
-});
+stuff to add:
+  var game piece component - snowball
+  var obstacles - platforms
+  var score component - by time passed
+  var background component - mountain image
+  update game area - frame rate
+  clear and update functions
+  obstacles movement - upwards to keep ball centered
+  speedX and speedY 
+  add event listener for key presses - 37 for left, 39 for right
+  gravity
+  stop method
+  collision detection
+  frame counter and execution for multiple obstacles - add obstacle at set intervals
+  randomization of obstacle size and position
 
-gameCanvas.addEventListener('39', e => {
-    //tilt right
-});
+visuals to add:
+  start screen
+  mountain background
+  snowball
+  platforms
+  lose/restart screen
+  win screen
+  final win screen
 */
