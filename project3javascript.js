@@ -9,17 +9,8 @@ function onOpen () {
     document.getElementById("winScreen").style.display="none";
   }
 
-  var gameCanvas = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-      this.context = this.canvas.getContext("2d");
-      document.body.insertAdjacentElement("afterend", canvasArea);
-      document.getElementById("canvasArea").style.display="block";
-    }
-  }
-
   function startGame() {
-    gameCanvas.start();
+    canvas.style.display="block";
     document.getElementById("startScreen").style.display="none";
     document.getElementById("levelOne").style.display="block";
   }
@@ -73,4 +64,6 @@ visuals to add:
   lose/restart screen
   win screen
   final win screen
+
+determine dimensions of canvas and browser
 */
