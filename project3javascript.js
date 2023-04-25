@@ -7,6 +7,7 @@ function onOpen () {
     document.getElementById("levelThree").style.display="none";
     document.getElementById("loseThree").style.display="none";
     document.getElementById("winScreen").style.display="none";
+    canvas.style.display="none";
   }
 
   function startGame() {
