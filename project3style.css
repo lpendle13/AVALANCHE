@@ -1,20 +1,37 @@
 html, body {
     margin: 0;
     padding: 0;
-}
-  
-graphics {
-    display: none;
-    width: 100%;
+    min-height:572px;
+    max-height: 572px;
+    min-width:1000px;
+    max-width: 1000px;
 }
 
+canvas {
+    display: none;
+    margin: 0;
+    padding: 0;
+    
+}
+header {
+    visibility: hidden;
+    height: 0;
+    margin-top: -26px;
+    padding-top: 10px;
+}
 body {
-    background-color: lightblue;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: white;
+    background-image: url(graphics/Avalanche-start.png);
+    background-repeat: no-repeat;
 }
 
 header, #content {
     text-align: center;
+}
+
+#topButton {
+    margin-top: 300px;
 }
 
 .levels {
