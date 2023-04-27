@@ -27,11 +27,11 @@ class Platform {
 }
 
 function setup() {
-  createCanvas(innerWidth, innerHeight); //change to final graphics size
+  createCanvas(innerWidth, innerHeight);
   //create platforms
   for (let i = 0; i < platformNumber; i++) {
     platform[i] = new Platform();
-    platform[i].x = random(0, 800); //change to final graphics width
+    platform[i].x = random(0, 800);
     platform[i].y = random(0, 100);
   }
   // add event listeners for arrow keys
@@ -49,6 +49,10 @@ function setup() {
     }
   });
 }
+//resize canvas if window is resized
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
 
 function draw() {
   background(235);
@@ -59,6 +63,8 @@ function draw() {
   ellipse(xPosition, yPosition, diameter, diameter);
 
  collisionCheck();
+
+ boundaryCheck();
 
   // accelerate the ball downwards and sideways
   ySpeed += gravityAcceleration;
@@ -104,3 +110,19 @@ function collisionCheck() {
       xSpeed += horizontalAcceleration * sin(platform[0].tiltAngle);
     }
   } 
+
+function boundaryCheck() {
+  if (xPosition + diameter/2 > width || xPosition - diameter/2 < 0) {
+    endGame();
+  }
+}
+
+function restartGame() {
+  xPosition = innerWidth/2;
+  yPosition = 50;
+  xSpeed = 0;
+  ySpeed = 0;
+  for (let i = 0; i < platformNumber; i++) {platform[i].tiltAngle = 0;}
+  loop();
+  startGame();
+}

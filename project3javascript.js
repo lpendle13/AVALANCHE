@@ -1,32 +1,35 @@
 function onOpen () {
-    document.getElementById("levelOne").style.display="none";
-    document.getElementById("startTwo").style.display="none";
-    document.getElementById("levelTwo").style.display="none";
-    document.getElementById("loseTwo").style.display="none";
-    document.getElementById("startThree").style.display="none";
-    document.getElementById("levelThree").style.display="none";
-    document.getElementById("loseThree").style.display="none";
-    document.getElementById("winScreen").style.display="none";
-    canvas.style.display="none";
+  document.getElementById("startScreen").style.display="block";
+  document.getElementById("instructions").style.display="none";
+  document.getElementById("gameScreen").style.display="none";
+  document.getElementById("endScreen").style.display="none";
+  canvas.style.display="none";
   }
 
-  function startGame() {
-    canvas.style.display="block";
-    document.getElementById("startScreen").style.display="none";
-    document.getElementById("levelOne").style.display="block";
+function instructionPage() {
+  document.getElementById("startScreen").style.display="none";
+  document.getElementById("instructions").style.display="block";
+  document.getElementById("gameScreen").style.display="none";
+  document.getElementById("endScreen").style.display="none";
+  canvas.style.display="none";
   }
 
-function startLevelTwo() {
-    document.getElementById("startScreen").style.display="none";
-    document.getElementById("startTwo").style.display="none";
-    document.getElementById("levelTwo").style.display="block";
+function startGame() {
+  canvas.style.display="block";
+  document.getElementById("startScreen").style.display="none";
+  document.getElementById("instructions").style.display="none";
+  document.getElementById("gameScreen").style.display="block";
+  document.getElementById("endScreen").style.display="none";
   }
 
-function startLevelThree() {
-    document.getElementById("startScreen").style.display="none";
-    document.getElementById("startThree").style.display="none";
-    document.getElementById("levelThree").style.display="block";  
+function endGame() {
+  canvas.style.display="none";
+  document.getElementById("startScreen").style.display="none";
+  document.getElementById("instructions").style.display="none";
+  document.getElementById("gameScreen").style.display="none";
+  document.getElementById("endScreen").style.display="block";
   }
+
 /*
 
 stuff to add:

@@ -10,6 +10,7 @@ html, body {
 canvas {
     display: none;
     margin: 0;
+    margin-top: 15px;
     padding: 0;
     
 }
@@ -30,15 +31,15 @@ header, #content {
     text-align: center;
 }
 
-#topButton {
+#topButton, .buttons {
     margin-top: 300px;
 }
 
-.levels {
+#gamescreen {
     position: relative;
 }
 
-.lev {
+.title {
     position: absolute;
     left: 10px;
 }
