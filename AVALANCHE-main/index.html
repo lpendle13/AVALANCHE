@@ -8,47 +8,26 @@
         <script src="sketch.js"></script>
         <script src="p5.collide2d.min.js"></script>
     </head>
-    
+
     <body onload="onOpen()">
     <header><h1>AVALANCHE</h1></header>
     <div id="content">
-        <div id="startScreen">
-            <h2>instructions go here</h2>
+      <div id="startScreen">
+            <button id="topButton" onClick="instructionPage()">how to play</button>
+        </br>
             <button onClick="startGame()">press to start</button>
         </div>
-        <div id="levelOne" class="levels">
-            <h2 class="lev">level 1</h2>
+        <div id="instructions">
+            <button class="buttons" onClick="onOpen()">return to home screen</button>
+        </div>
+        <div id="gameScreen">
+            <h2 class="title">AVALANCHE</h2>
             <h2 class="score">score bar goes here</h2>
         </div>
-        <div id="startTwo">
-            <h2>congratulations! you have reached level 2</h2>
-            <button onClick="startLevelTwo()">press to start</button>
-        </div>
-        <div id="levelTwo" class="levels">
-            <h2 class="lev">level 2</h2>
-            <h2 class="score">score bar goes here</h2>
-        </div>
-        <div id="loseTwo",>
-            <h2>fail</h2>
-            <button onClick="startLevelTwo()">press to try again</button>
-        </div>
-        <div id="startThree">
-            <h2>congratulations! you have reached level 2</h2>
-            <button onClick="startLevelTwo()">press to start</button>
-        </div>
-        <div id="levelThree" class="levels">
-            <h2 class="lev">level 3</h2>
-            <h2 class="score">score bar goes here</h2>
-        </div>
-        <div id="loseThree">
-            <h2>fail</h2>
-            <button onClick="startLevelThree()">press to try again</button>
-        </div>
-        <div id="winScreen">
-            <h2>congratulations! you have completed Avalanche</h2>
-            <button onClick="onOpen()">return to home screen</button>
-        </div>
-        </div>
-    <p id="canvasArea"></p>
+        <div id="endScreen">
+            <h2 class='finalScore'>congratulations! score here</h2>
+            <button class="buttons" onClick="restartGame()">play again</button>
+      </div>
+    </div>
     </body>
 </html>

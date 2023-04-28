@@ -1,22 +1,25 @@
 
-let xPosition = 100;
-let yPosition = 50;
+let xPosition = 501;
+let yPosition = 285;
 let diameter = 50;
+let score = 0;
 
 //// Keep track of the speed of the ball
 let ySpeed = 0;
 let xSpeed = 0;
-
+let gameStarted = false;
 //Variable used to accelerate ball downwards
 let gravityAcceleration = 0.9;
 let horizontalAcceleration = 0.1;
 
 let platform = [];
-var platformNumber = 6; //can adjust later
+var platformNumber = 12; //can adjust later
 var platformGap = 100; //can adjust later
 
+var backgroundIMG;
+
 function preload() {
-  //load all graphics here
+  backgroundIMG = loadImage ('graphics/BackgroundGame.png');
 }
 
 class Platform {
@@ -27,13 +30,18 @@ class Platform {
 }
 
 function setup() {
-  createCanvas(800, 600); //change to final graphics size
+  createCanvas(1002, 574);
   //create platforms
-  for (let i = 0; i < platformNumber; i++) {
+  platform[0] = new Platform();
+  platform[0].x = 401;
+  platform[0].y = 400;
+
+  for (let i = 1; i < platformNumber; i++) {
     platform[i] = new Platform();
-    platform[i].x = random(0, 400); //change to final graphics width
-    platform[i].y = platformGap;
+    platform[i].x = random(0, 800);
+    platform[i].y = random(0, 100);
   }
+
   // add event listeners for arrow keys
   document.addEventListener('keydown', function(event) {
     if (event.code === 'ArrowLeft') {
@@ -49,41 +57,34 @@ function setup() {
     }
   });
 }
+//resize canvas if window is resized
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
 
 function draw() {
   background(235);
+  image(backgroundIMG, 0, 0);
   drawPlatform();
 
   //Draw the ball
   fill("white");
   ellipse(xPosition, yPosition, diameter, diameter);
 
- collisionCheck();
+  collisionCheck();
 
-  // accelerate the ball downwards and sideways
-  ySpeed += gravityAcceleration;
-  xSpeed += horizontalAcceleration * sin(platform[0].tiltAngle);
+  boundaryCheck();
 
-  // update the position of the ball
-  yPosition += ySpeed;
-  xPosition += xSpeed;
-
-  //bounce the ball at the edge of the frame:
-  if (yPosition + diameter/2 > height) {
-    ySpeed = -ySpeed;
-    yPosition = height - diameter/2
-  }
-  //make the ball go to the other side of the screen when it crosses the horizontal edges
-  if (xPosition + diameter/2 > width) {
-    xPosition = diameter/2;
-  }
-  if (xPosition - diameter/2 < 0) {
-    xPosition = width - diameter/2;
-  }
-
-  //Air friction is the reduction of speed by a small percentage over time
-  ySpeed *= 0.997;
-  xSpeed *= 0.997;
+  if (gameStarted === true) {
+    ySpeed += gravityAcceleration;
+    xSpeed += horizontalAcceleration * sin(platform[0].tiltAngle);
+    yPosition += ySpeed;
+    xPosition += xSpeed;
+    ySpeed *= 0.987;
+    xSpeed *= 0.987;
+    score += 1;
+    document.getElementsByClassName('score')[0].innerHTML = 'Score: ' + score.toString();
+ }
 }
 
 function drawPlatform() {
@@ -94,8 +95,8 @@ function drawPlatform() {
     rotate(platform[i].tiltAngle);
     rect(-100, -platform[i].height/2, 200, platform[i].height);
     pop();
-    platform[i].y = 500 + i * platformGap - (frameCount % (450 + i * platformGap)); //adjust number for graphics height
-}
+    platform[i].y = 650 + i * platformGap - (frameCount % (650 + i * platformGap));
+  }
 }
 
 // Check for collisions with each platform and bounce the ball
@@ -106,10 +107,37 @@ function collisionCheck() {
       inContact = true; // set the boolean variable to true if the ball is in contact with a platform
       ySpeed = -ySpeed * 0.8; // flip the speed and reduce it a bit
       yPosition = platform[i].y - diameter/2; // prevent the ball from sticking to the platform
-    }
-  }
+    }}
     if (inContact) {
       xSpeed += horizontalAcceleration * sin(platform[0].tiltAngle);
-
     }
   }
+
+function boundaryCheck() {
+  if (xPosition + diameter/2 > width || xPosition - diameter/2 < 0 || yPosition + diameter/2 > height || yPosition - diameter/2 < 0) {
+    document.getElementsByClassName('finalScore')[0].innerHTML = 'Congratulations! Score: ' + score.toString();
+    endGame();
+  }
+}
+
+function restartGame() {
+  xPosition = 501;
+  yPosition = 285;
+  xSpeed = 0;
+  ySpeed = 0;
+  score = 0;
+
+  //create platforms
+  platform[0] = new Platform();
+  platform[0].x = 401;
+  platform[0].y = 300;
+  for (let i = 1; i < platformNumber; i++) {
+    platform[i] = new Platform();
+    platform[i].x = random(0, 800);
+    platform[i].y = random(0, 100);
+  }
+
+  for (let i = 0; i < platformNumber; i++) {platform[i].tiltAngle = 0;}
+  loop();
+  startGame();
+}
