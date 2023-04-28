@@ -7,14 +7,15 @@ function onOpen () {
   }
 
 function instructionPage() {
+  canvas.style.display="none";
   document.getElementById("startScreen").style.display="none";
   document.getElementById("instructions").style.display="block";
   document.getElementById("gameScreen").style.display="none";
   document.getElementById("endScreen").style.display="none";
-  canvas.style.display="none";
   }
 
 function startGame() {
+  gameStarted=true;
   canvas.style.display="block";
   document.getElementById("startScreen").style.display="none";
   document.getElementById("instructions").style.display="none";
@@ -23,30 +24,10 @@ function startGame() {
   }
 
 function endGame() {
+  gameStarted=false;
   canvas.style.display="none";
   document.getElementById("startScreen").style.display="none";
   document.getElementById("instructions").style.display="none";
   document.getElementById("gameScreen").style.display="none";
   document.getElementById("endScreen").style.display="block";
   }
-
-/*
-
-stuff to add:
-  var score component - by time passed
-  var background component - mountain image
-  stop method
-  audio
-  game over
-  reset button
-
-visuals to add:
-  mountain background
-  snowball
-  platforms
-  lose/restart screen
-  win screen
-  final win screen
-
-determine dimensions of canvas and browser
-*/

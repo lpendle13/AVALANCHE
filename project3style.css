@@ -11,15 +11,19 @@ canvas {
     display: none;
     margin: 0;
     margin-top: 15px;
-    padding: 0;
-    
+    padding: 0;    
 }
+#p5_loading {
+    display: none;
+}
+
 header {
     visibility: hidden;
     height: 0;
     margin-top: -26px;
     padding-top: 10px;
 }
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: white;
