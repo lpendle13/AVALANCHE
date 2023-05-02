@@ -1,17 +1,18 @@
 
 let xPosition = 500;
-let yPosition = 50;
+let yPosition = 200;
 let diameter = 50;
 let score = 0;
 
 //// Keep track of the speed of the ball
 let ySpeed = 0;
 let xSpeed = 0;
+
 let gameStarted = false;
 
 //Variable used to accelerate ball downwards
-let gravityAcceleration = 0.9;
-let horizontalAcceleration = 0.1;
+let gravityAcceleration = 0.3;
+let horizontalAcceleration = 0.2;
 
 let platform = [];
 var platformNumber = 12; //can adjust later
@@ -20,13 +21,16 @@ var platformGap = 100; //can adjust later
 var backgroundImg;
 var platformImg;
 var snowballImg;
+let howToImg;
 
-function preload() {
+ /* function preload() {
   //load all graphics here
   backgroundImg = loadImage('graphics/BackgroundGame.png');
   platformImg = loadImage('graphics/Platforms.png');
   snowballImg = loadImage('graphics/Ball.png');
+  howToImg = loadImage('graphics/Avalanche-how_to_play.png');
 }
+*/
 
 class Platform { 
   constructor() {
@@ -36,12 +40,13 @@ class Platform {
 }
 
 function setup() {
-  createCanvas(1000, 572);
 
+  createCanvas(1000, 572);
+  
   //create platforms
   platform[0] = new Platform();
   platform[0].x = 400;
-  platform[0].y = 400;
+  platform[0].y = 200;
 
   for (let i = 1; i < platformNumber; i++) {
     platform[i] = new Platform();
@@ -67,14 +72,15 @@ function setup() {
 
 function draw() {
   background(255);
-  image(backgroundImg,0,0);
+ // image(backgroundImg,0,0);
+
   drawPlatform();
 
   //Draw the ball
   noFill();
-  noStroke();
+ // noStroke();
   ellipse(xPosition, yPosition, diameter, diameter);
-  image(snowballImg,xPosition-25,yPosition-25,diameter,diameter);
+ // image(snowballImg,xPosition-25,yPosition-25,diameter,diameter);
 
  collisionCheck();
 
@@ -98,9 +104,9 @@ for (let i = 0; i < platformNumber; i++) {
   translate(platform[i].x + 100, platform[i].y + platform[i].height/2);
   rotate(platform[i].tiltAngle);
   noFill();
-  noStroke();
+ // noStroke();
   rect(-100, -platform[i].height/2, 200, platform[i].height);
-  image(platformImg, -100, -platform[i].height/2, 200, platform[i].height);
+ // image(platformImg, -100, -platform[i].height/2, 200, platform[i].height);
   pop();
   platform[i].y = 650 + i * platformGap - (frameCount % (650 + i * platformGap));
 }
@@ -108,6 +114,7 @@ for (let i = 0; i < platformNumber; i++) {
 
 // Check for collisions with each platform and bounce the ball
 function collisionCheck() {
+  if (gameStarted===true) {
   let inContact = false; // boolean variable to track if the ball is in contact with any platform
   for (let i = 0; i < platformNumber; i++) {
     if (collideRectCircle(platform[i].x, platform[i].y, 200, platform[i].height, xPosition, yPosition, diameter)) {
@@ -118,18 +125,19 @@ function collisionCheck() {
     if (inContact) {
       xSpeed += horizontalAcceleration * sin(platform[0].tiltAngle);
     }
-  } 
+  } }
 
 function boundaryCheck() {
+  if (gameStarted===true) {
     if (xPosition + diameter/2 > width || xPosition - diameter/2 < 0 || yPosition + diameter/2 > height || yPosition - diameter/2 < 0) {
       document.getElementsByClassName('finalScore')[0].innerHTML = 'Congratulations! Score: ' + score.toString();
       endGame();
     }
-  }
+  }}
 
 function restartGame() {
   xPosition = 500;
-  yPosition = 286;
+  yPosition = 200;
   xSpeed = 0;
   ySpeed = 0;
   score = 0;
@@ -137,7 +145,8 @@ function restartGame() {
   //create platforms
   platform[0] = new Platform();
   platform[0].x = 400;
-  platform[0].y = 400;
+  platform[0].y = 200;
+
   for (let i = 1; i < platformNumber; i++) {
     platform[i] = new Platform();
     platform[i].x = random(0, 800);

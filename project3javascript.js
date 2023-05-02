@@ -1,13 +1,16 @@
 function onOpen () {
+  gameStarted=false;
+  canvas.style.display="none";
+  document.getElementById("head").style.visibility="visible";
   document.getElementById("startScreen").style.display="block";
   document.getElementById("instructions").style.display="none";
   document.getElementById("gameScreen").style.display="none";
   document.getElementById("endScreen").style.display="none";
-  canvas.style.display="none";
   }
 
 function instructionPage() {
   canvas.style.display="none";
+  document.getElementById("head").style.visibility="hidden";
   document.getElementById("startScreen").style.display="none";
   document.getElementById("instructions").style.display="block";
   document.getElementById("gameScreen").style.display="none";

@@ -10,24 +10,25 @@
     </head>
     
     <body onload="onOpen()">
-    <header><h1>AVALANCHE</h1></header>
+    <header id="head"><h1><img src="graphics/Avalanche-start.png" alt=""></h1></header>
     <div id="p5_loading"></div>
     <div id="content">
       <div id="startScreen">
-            <button id="topButton" onClick="instructionPage()">how to play</button>
-        </br>
-            <button onClick="startGame()">press to start</button>
+            <p><button id="topButton" onClick="startGame()">press to start</button></p>
+            <p><button id="howToButton" onClick="instructionPage()">how to play</button></p>
+
         </div>
         <div id="instructions">
-            <button class="buttons" onClick="onOpen()">return to home screen</button>
+            <p>instructions go in this area</p>
+            <button class="buttons" onClick="onOpen()">back to home page</button>
         </div>
         <div id="gameScreen">
-            <h2 class="title">AVALANCHE</h2>
-            <h2 class="score">score bar goes here</h2>
+            <h1 class="title">AVALANCHE</h1>
+            <h1 class="score">score bar goes here</h1>
         </div>
         <div id="endScreen">
             <h2 class='finalScore'>congratulations! score here</h2>
-            <button class="buttons" onClick="restartGame()">play again</button>
+            <button id="restartButton" class="buttons" onClick="restartGame()">play again</button>
       </div>
     </div>
     </body>

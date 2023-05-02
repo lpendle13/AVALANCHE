@@ -1,4 +1,10 @@
+@font-face {
+    font-family: Marker\ Felt\ Wide;
+    src: url(Marker\ Felt\ Wide.ttf);
+}
+
 html, body {
+    font-family: Marker\ Felt\ Wide;
     margin: 0;
     padding: 0;
     min-height:572px;
@@ -21,13 +27,14 @@ header {
     visibility: hidden;
     height: 0;
     margin-top: -26px;
-    padding-top: 10px;
+    padding-top: 5px;
 }
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: white;
+#head {
     background-image: url(graphics/Avalanche-start.png);
+}
+body {
+    background-color: white;
+    background-image: url(graphics/Avalanche-blank-start.png);
     background-repeat: no-repeat;
 }
 
@@ -36,7 +43,25 @@ header, #content {
 }
 
 #topButton, .buttons {
-    margin-top: 300px;
+    margin-top: 350px;
+}
+
+#restartButton {
+    margin-top: 0;
+}
+button {
+    width: 250px;
+    height: 50px;
+    background-color: rgb(237,234,145);
+    border: 1px solid black;
+    border-radius: 15px;
+    font-size: 20pt;
+    font-family: Marker\ Felt\ Wide;
+}
+
+.finalScore {
+    margin-top: 325px;
+    font-size: 40px;
 }
 
 #gamescreen {
