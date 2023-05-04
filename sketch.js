@@ -23,14 +23,14 @@ var platformImg;
 var snowballImg;
 let howToImg;
 
- /* function preload() {
+/*  function preload() {
   //load all graphics here
   backgroundImg = loadImage('graphics/BackgroundGame.png');
   platformImg = loadImage('graphics/Platforms.png');
   snowballImg = loadImage('graphics/Ball.png');
   howToImg = loadImage('graphics/Avalanche-how_to_play.png');
-}
-*/
+} */
+
 
 class Platform { 
   constructor() {
@@ -54,37 +54,58 @@ function setup() {
     platform[i].y = random(0, 100);
   }
 
-  // add event listeners for arrow keys
-  document.addEventListener('keydown', function(event) {
-    if (event.code === 'ArrowLeft') {
-      // update the tiltAngle property of all platforms
-      for (let i = 0; i < platformNumber; i++) {
-        platform[i].tiltAngle -= 0.1;
-      }
-    } else if (event.code === 'ArrowRight') {
-      // update the tiltAngle property of all platforms
-      for (let i = 0; i < platformNumber; i++) {
-        platform[i].tiltAngle += 0.1;
-      }
+let leftPressed = false;
+let rightPressed = false;
+
+document.addEventListener('keydown', function(event) {
+  if (event.code === 'ArrowLeft') {
+    leftPressed = true;
+  } else if (event.code === 'ArrowRight') {
+    rightPressed = true;
+  }
+});
+
+document.addEventListener('keyup', function(event) {
+  if (event.code === 'ArrowLeft') {
+    leftPressed = false;
+  } else if (event.code === 'ArrowRight') {
+    rightPressed = false;
+  }
+});
+
+function gameLoop() {
+  if (leftPressed) {
+    for (let i = 0; i < platformNumber; i++) {
+      platform[i].tiltAngle = -0.25;
     }
-  });
+  } else if (rightPressed) {
+    for (let i = 0; i < platformNumber; i++) {
+      platform[i].tiltAngle = 0.25;
+    }
+  } else if (leftPressed === false || rightPressed === false) {
+    for (let i = 0; i < platformNumber; i++) {
+    platform[i].tiltAngle = 0;
+  }
+  }
+}
+setInterval(gameLoop, 16); // run gameLoop every 16ms;
 }
 
 function draw() {
   background(255);
- // image(backgroundImg,0,0);
+  //image(backgroundImg,0,0);
 
   drawPlatform();
 
   //Draw the ball
   noFill();
- // noStroke();
+  //noStroke();
   ellipse(xPosition, yPosition, diameter, diameter);
- // image(snowballImg,xPosition-25,yPosition-25,diameter,diameter);
+  //image(snowballImg,xPosition-25,yPosition-25,diameter,diameter);
 
- collisionCheck();
+  collisionCheck();
 
- boundaryCheck();
+  boundaryCheck();
 
 if (gameStarted === true) {
   ySpeed += gravityAcceleration;
@@ -99,7 +120,12 @@ if (gameStarted === true) {
 }
 
 function drawPlatform() {
+
 for (let i = 0; i < platformNumber; i++) {
+  if (gameStarted===false) {
+    platform[i].y = 400;
+    stroke(0);
+  } else if (gameStarted===true) {
   push();
   translate(platform[i].x + 100, platform[i].y + platform[i].height/2);
   rotate(platform[i].tiltAngle);
@@ -109,12 +135,11 @@ for (let i = 0; i < platformNumber; i++) {
  // image(platformImg, -100, -platform[i].height/2, 200, platform[i].height);
   pop();
   platform[i].y = 650 + i * platformGap - (frameCount % (650 + i * platformGap));
-}
-}
+  }
+}}
 
 // Check for collisions with each platform and bounce the ball
 function collisionCheck() {
-  if (gameStarted===true) {
   let inContact = false; // boolean variable to track if the ball is in contact with any platform
   for (let i = 0; i < platformNumber; i++) {
     if (collideRectCircle(platform[i].x, platform[i].y, 200, platform[i].height, xPosition, yPosition, diameter)) {
@@ -125,15 +150,14 @@ function collisionCheck() {
     if (inContact) {
       xSpeed += horizontalAcceleration * sin(platform[0].tiltAngle);
     }
-  } }
+  } 
 
 function boundaryCheck() {
-  if (gameStarted===true) {
     if (xPosition + diameter/2 > width || xPosition - diameter/2 < 0 || yPosition + diameter/2 > height || yPosition - diameter/2 < 0) {
       document.getElementsByClassName('finalScore')[0].innerHTML = 'Congratulations! Score: ' + score.toString();
       endGame();
     }
-  }}
+  }
 
 function restartGame() {
   xPosition = 500;

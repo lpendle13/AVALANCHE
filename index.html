@@ -10,7 +10,7 @@
     </head>
     
     <body onload="onOpen()">
-    <header id="head"><h1><img src="graphics/Avalanche-start.png" alt=""></h1></header>
+    <header id="head"></header>
     <div id="p5_loading"></div>
     <div id="content">
       <div id="startScreen">
@@ -19,8 +19,17 @@
 
         </div>
         <div id="instructions">
-            <p>instructions go in this area</p>
-            <button class="buttons" onClick="onOpen()">back to home page</button>
+            <h1 id="howToHead"> How to Play</h1>
+            <p id="instruction">
+                <br>
+                  <p id="textA">  At the start of the game the snowball appears on one of the platforms you control.</p>
+                <br>
+                 <p id="textB">   With the controls, change the angle of the platform to move the snowball around.</p>
+                <br>
+               <p id="textC">     Try your best to keep the snowball from hitting the edge of the screen as long as you can.</p>
+                
+            </p>
+            <button id="backButton" class="buttons" onClick="onOpen()">back to home page</button>
         </div>
         <div id="gameScreen">
             <h1 class="title">AVALANCHE</h1>
