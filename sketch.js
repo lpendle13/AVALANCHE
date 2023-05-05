@@ -18,17 +18,34 @@ let platform = [];
 var platformNumber = 12; //can adjust later
 var platformGap = 100; //can adjust later
 
-var backgroundImg;
-var platformImg;
-var snowballImg;
-let howToImg;
+var backgroundImg = document.createElement("IMG");
+  backgroundImg.setAttribute("src", "graphics/BackgroundGame.png");
+  backgroundImg.setAttribute("width", "1000");
+  backgroundImg.setAttribute("height", "572");
+var platformImg = document.createElement("IMG");
+  platformImg.setAttribute("src", "graphics/Platforms.png");
+  platformImg.setAttribute("width", "200");
+  platformImg.setAttribute("height", "15");
+  var platformLeft = document.createElement("IMG");
+  platformLeft.setAttribute("src", "graphics/PlatformsLeft.png");
+  platformLeft.setAttribute("width", "193");
+  platformLeft.setAttribute("height", "60");
+  var platformRight = document.createElement("IMG");
+  platformRight.setAttribute("src", "graphics/PlatformsRight.png");
+  platformRight.setAttribute("width", "193");
+  platformRight.setAttribute("height", "60");
+
+var snowballImg = document.createElement("IMG");
+  snowballImg.setAttribute("src", "graphics/Ball.png");
+  snowballImg.setAttribute("width", "50");
+  snowballImg.setAttribute("height", "50");
+
 
 /*  function preload() {
   //load all graphics here
   backgroundImg = loadImage('graphics/BackgroundGame.png');
   platformImg = loadImage('graphics/Platforms.png');
   snowballImg = loadImage('graphics/Ball.png');
-  howToImg = loadImage('graphics/Avalanche-how_to_play.png');
 } */
 
 
@@ -36,7 +53,7 @@ class Platform {
   constructor() {
     this.height = 15;
     this.tiltAngle = 0;
-  }
+    }
 }
 
 function setup() {
@@ -93,18 +110,38 @@ setInterval(gameLoop, 16); // run gameLoop every 16ms;
 
 function draw() {
   background(255);
-  //image(backgroundImg,0,0);
+
+  //draw canvas background image
+  var context = canvas.getContext("2d");
+  context.drawImage(backgroundImg,0,0);
 
   drawPlatform();
 
+  //draw platform images based on tilt angle
+  for (let i = 0; i < platformNumber; i++){
+   if (platform[i].tiltAngle === -0.25) {
+   var context = canvas.getContext("2d");
+   context.drawImage(platformLeft,platform[i].x, platform[i].y-20,193,60);
+
+  } else if (platform[i].tiltAngle === 0.25) {
+      var context = canvas.getContext("2d");
+   context.drawImage(platformRight,platform[i].x, platform[i].y-20,193,60);
+
+  } else if (platform[i].tiltAngle === 0) {
+   var context = canvas.getContext("2d");
+   context.drawImage(platformImg,platform[i].x, platform[i].y-5,200,16);
+  }  
+}
   //Draw the ball
   noFill();
   //noStroke();
-  ellipse(xPosition, yPosition, diameter, diameter);
+  //ellipse(xPosition, yPosition, diameter, diameter);
+  var context = canvas.getContext("2d");
+  context.drawImage(snowballImg,xPosition-25, yPosition-25, diameter, diameter);
+
   //image(snowballImg,xPosition-25,yPosition-25,diameter,diameter);
 
   collisionCheck();
-
   boundaryCheck();
 
 if (gameStarted === true) {
@@ -129,9 +166,7 @@ for (let i = 0; i < platformNumber; i++) {
   push();
   translate(platform[i].x + 100, platform[i].y + platform[i].height/2);
   rotate(platform[i].tiltAngle);
-  noFill();
- // noStroke();
-  rect(-100, -platform[i].height/2, 200, platform[i].height);
+  //rect(-100, -platform[i].height/2, 200, platform[i].height);
  // image(platformImg, -100, -platform[i].height/2, 200, platform[i].height);
   pop();
   platform[i].y = 650 + i * platformGap - (frameCount % (650 + i * platformGap));

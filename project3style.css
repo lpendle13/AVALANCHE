@@ -31,7 +31,9 @@ header {
     margin-top: -21.5px;
     padding-top: 0;
 }
-
+h1 {
+    padding: 5px;
+}
 body {
     background-color: white;
     background-image: url(graphics/Avalanche-start.png);
@@ -45,31 +47,31 @@ body {
     margin-left: 200px;
     margin-right: 200px;
     margin-top: 100px;
-    height: 150px;
+    height: 100px;
     border-radius: 50px;
     border: 1px solid black;
-    padding-top: 75px;
+    padding-top: 95px;
 }
 #textA, #textB, #textC {
     font-size: 18px;
     padding: 0;
     margin-left: 220px;
     margin-right: 220px;
-    margin-bottom: 0;
+    margin-bottom: -10px;
     margin-top: 0;
 }
 #textA {
-    margin-top: -190px;
+    margin-top: -165px;
 }
 #textC {
-    margin-bottom: 30px;
+    margin-bottom: 0px;
 }
 #howToHead {
     text-decoration: underline;
     text-underline-offset: 5px;  
     text-decoration-thickness: 2px;  
     height: 0;
-    margin: -105px;
+    margin: -110px;
     padding-top: 375px;
     padding-bottom: -100px;
     font-size: 35px;
