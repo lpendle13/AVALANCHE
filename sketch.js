@@ -15,8 +15,11 @@ let gravityAcceleration = 0.3;
 let horizontalAcceleration = 0.2;
 
 let platform = [];
-var platformNumber = 12; //can adjust later
-var platformGap = 100; //can adjust later
+var platformNumber = 12; 
+var platformGap = 100;
+
+let leftPressed = false;
+let rightPressed = false;
 
 var backgroundImg = document.createElement("IMG");
   backgroundImg.setAttribute("src", "graphics/BackgroundGame.png");
@@ -26,28 +29,18 @@ var platformImg = document.createElement("IMG");
   platformImg.setAttribute("src", "graphics/Platforms.png");
   platformImg.setAttribute("width", "200");
   platformImg.setAttribute("height", "15");
-  var platformLeft = document.createElement("IMG");
+var platformLeft = document.createElement("IMG");
   platformLeft.setAttribute("src", "graphics/PlatformsLeft.png");
   platformLeft.setAttribute("width", "193");
   platformLeft.setAttribute("height", "60");
-  var platformRight = document.createElement("IMG");
+var platformRight = document.createElement("IMG");
   platformRight.setAttribute("src", "graphics/PlatformsRight.png");
   platformRight.setAttribute("width", "193");
   platformRight.setAttribute("height", "60");
-
 var snowballImg = document.createElement("IMG");
   snowballImg.setAttribute("src", "graphics/Ball.png");
   snowballImg.setAttribute("width", "50");
   snowballImg.setAttribute("height", "50");
-
-
-/*  function preload() {
-  //load all graphics here
-  backgroundImg = loadImage('graphics/BackgroundGame.png');
-  platformImg = loadImage('graphics/Platforms.png');
-  snowballImg = loadImage('graphics/Ball.png');
-} */
-
 
 class Platform { 
   constructor() {
@@ -57,31 +50,31 @@ class Platform {
 }
 
 function setup() {
+  gameMusic = new sound("audio/gameMusic.mp3");
+  gameOver = new sound("audio/gameOver.mp3");
 
   createCanvas(1000, 572);
-  
+
   //create platforms
   platform[0] = new Platform();
   platform[0].x = 400;
   platform[0].y = 200;
-
   for (let i = 1; i < platformNumber; i++) {
     platform[i] = new Platform();
     platform[i].x = random(0, 800);
     platform[i].y = random(0, 100);
   }
 
-let leftPressed = false;
-let rightPressed = false;
-
+// Event listeners for arrow key controls
 document.addEventListener('keydown', function(event) {
   if (event.code === 'ArrowLeft') {
     leftPressed = true;
   } else if (event.code === 'ArrowRight') {
     rightPressed = true;
+  } else if (event.code === 'ArrowUp') {
+    startGame();
   }
 });
-
 document.addEventListener('keyup', function(event) {
   if (event.code === 'ArrowLeft') {
     leftPressed = false;
@@ -90,6 +83,7 @@ document.addEventListener('keyup', function(event) {
   }
 });
 
+// gameLoop continuously checks if the right and left arrow keys are being held
 function gameLoop() {
   if (leftPressed) {
     for (let i = 0; i < platformNumber; i++) {
@@ -105,7 +99,7 @@ function gameLoop() {
   }
   }
 }
-setInterval(gameLoop, 16); // run gameLoop every 16ms;
+setInterval(gameLoop, 16); 
 }
 
 function draw() {
@@ -122,24 +116,18 @@ function draw() {
    if (platform[i].tiltAngle === -0.25) {
    var context = canvas.getContext("2d");
    context.drawImage(platformLeft,platform[i].x, platform[i].y-20,193,60);
-
-  } else if (platform[i].tiltAngle === 0.25) {
-      var context = canvas.getContext("2d");
+ } else if (platform[i].tiltAngle === 0.25) {
+   var context = canvas.getContext("2d");
    context.drawImage(platformRight,platform[i].x, platform[i].y-20,193,60);
-
-  } else if (platform[i].tiltAngle === 0) {
+ } else if (platform[i].tiltAngle === 0) {
    var context = canvas.getContext("2d");
    context.drawImage(platformImg,platform[i].x, platform[i].y-5,200,16);
   }  
 }
   //Draw the ball
   noFill();
-  //noStroke();
-  //ellipse(xPosition, yPosition, diameter, diameter);
   var context = canvas.getContext("2d");
   context.drawImage(snowballImg,xPosition-25, yPosition-25, diameter, diameter);
-
-  //image(snowballImg,xPosition-25,yPosition-25,diameter,diameter);
 
   collisionCheck();
   boundaryCheck();
@@ -156,18 +144,16 @@ if (gameStarted === true) {
 }
 }
 
+// Create and move the platforms
 function drawPlatform() {
-
-for (let i = 0; i < platformNumber; i++) {
-  if (gameStarted===false) {
+  for (let i = 0; i < platformNumber; i++) {
+   if (gameStarted===false) {
     platform[i].y = 400;
     stroke(0);
   } else if (gameStarted===true) {
   push();
   translate(platform[i].x + 100, platform[i].y + platform[i].height/2);
   rotate(platform[i].tiltAngle);
-  //rect(-100, -platform[i].height/2, 200, platform[i].height);
- // image(platformImg, -100, -platform[i].height/2, 200, platform[i].height);
   pop();
   platform[i].y = 650 + i * platformGap - (frameCount % (650 + i * platformGap));
   }
@@ -175,18 +161,19 @@ for (let i = 0; i < platformNumber; i++) {
 
 // Check for collisions with each platform and bounce the ball
 function collisionCheck() {
-  let inContact = false; // boolean variable to track if the ball is in contact with any platform
+  let inContact = false; 
   for (let i = 0; i < platformNumber; i++) {
     if (collideRectCircle(platform[i].x, platform[i].y, 200, platform[i].height, xPosition, yPosition, diameter)) {
-      inContact = true; // set the boolean variable to true if the ball is in contact with a platform
-      ySpeed = -ySpeed * 0.8; // flip the speed and reduce it a bit
-      yPosition = platform[i].y - diameter/2; // prevent the ball from sticking to the platform
+      inContact = true; 
+      ySpeed = -ySpeed * 0.8; 
+      yPosition = platform[i].y - diameter/2; 
     }}
     if (inContact) {
       xSpeed += horizontalAcceleration * sin(platform[0].tiltAngle);
     }
   } 
 
+// Check for collision with the edge of the game window and end the game
 function boundaryCheck() {
     if (xPosition + diameter/2 > width || xPosition - diameter/2 < 0 || yPosition + diameter/2 > height || yPosition - diameter/2 < 0) {
       document.getElementsByClassName('finalScore')[0].innerHTML = 'Congratulations! Score: ' + score.toString();
@@ -194,6 +181,7 @@ function boundaryCheck() {
     }
   }
 
+// Reset the ball and platforms when starting a new game
 function restartGame() {
   xPosition = 500;
   yPosition = 200;
@@ -215,4 +203,27 @@ function restartGame() {
   for (let i = 0; i < platformNumber; i++) {platform[i].tiltAngle = 0;}
   loop();
   startGame();
+}
+
+// creates audio files and controls when they run
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+    if (gameOver.sound.currentTime>=5) {
+      gameOver.sound.pause();
+      gameOver.sound.currentTime=6;
+    }
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
+  this.reset = function(){
+    this.sound.currentTime = 0;
+}
 }

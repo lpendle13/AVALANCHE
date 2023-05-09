@@ -14,7 +14,10 @@ function startGame() {
   document.getElementById("instructions").style.display="none";
   document.getElementById("gameScreen").style.display="block";
   document.getElementById("endScreen").style.display="none";
-  }
+  gameMusic.play();
+  gameOver.stop();
+  gameOver.reset();
+}
 
 function endGame() {
   gameStarted=false;
@@ -22,4 +25,19 @@ function endGame() {
   document.getElementById("instructions").style.display="none";
   document.getElementById("gameScreen").style.display="none";
   document.getElementById("endScreen").style.display="block";
+  gameMusic.stop();
+  gameOver.play();
+  gameMusic.reset();
   }
+  
+document.addEventListener('keydown', function(event) {
+    if (event.code === 'ArrowUp') {
+      if (!gameStarted) {
+       restartGame();
+       }
+    } else if (event.code === 'ArrowUp' && document.getElementById("startScreen").classlist.contains("hidden")) {
+       if (gameStarted) {
+        onOpen();
+      }
+     }
+   }); 
